@@ -1,5 +1,6 @@
 import VueRouter from 'vue-router'
 import Vue from 'vue'
+import local from '@/utils/local'
 import Login from '@/views/login'
 import Home from '@/views/home'
 import Welcome from '@/views/welcome'
@@ -32,5 +33,13 @@ const router = new VueRouter({
       component: NotFind
     }
   ]
+})
+router.beforeEach((to, from, next) => {
+  // console.log('执行了')
+  // next()
+  const user = local.getUser()
+  // 如果跳转的页面不是登录页面且user不存在
+  if (to.path !== '/login' && !user) return next('/login')
+  next()
 })
 export default router

@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import local from '../../utils/local'
 export default {
   data () {
     const checkMobile = (rule, value, callback) => {
@@ -41,8 +42,8 @@ export default {
     }
     return {
       LoginForm: {
-        mobile: '',
-        code: ''
+        mobile: '13911111111',
+        code: '246810'
       },
       LoginRules: {
         mobile: [
@@ -63,11 +64,14 @@ export default {
           console.log(valid)
           this.$http
             .post('/authorizations', this.LoginForm)
-            .then(() => {
+            .then(res => {
+              // 成功
+              // 保存用户信息 包含token
+              local.setUser(res.data.data)
               this.$router.push('/')
             })
             .catch(() => {
-              // this.$message.error('手机号或者验证码不正确')
+              this.$message.error('手机号或者验证码不正确')
             })
         }
       })
