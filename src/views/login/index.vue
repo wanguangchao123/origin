@@ -21,7 +21,7 @@
           <el-checkbox :value="true">我已经阅读并同意协议吗</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button @click="login" type="primary" style="width:100%">立即创建</el-button>
+          <el-button @click="login" type="primary" style="width:100%">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -59,21 +59,26 @@ export default {
   },
   methods: {
     login () {
-      this.$refs['loginForm'].validate(valid => {
-        if (valid) {
-          console.log(valid)
-          this.$http
-            .post('/authorizations', this.LoginForm)
-            .then(res => {
-              // 成功
-              // 保存用户信息 包含token
-              local.setUser(res.data.data)
-              this.$router.push('/')
-            })
-            .catch(() => {
-              this.$message.error('手机号或者验证码不正确')
-            })
-        }
+      // 对整个表单进行校验
+      this.$refs['loginForm'].validate(async valid => {
+        // if (valid) {
+        //   this.$http
+        //     .post('/authorizations', this.LoginForm)
+        //     .then(res => {
+        //       // 成功
+        //       // 保存用户信息 包含token
+        //       local.setUser(res.data.data)
+        //       this.$router.push('/')
+        //     })
+        //     .catch(() => {
+        //       this.$message.error('手机号或者验证码不正确')
+        //     })
+        // }
+        try {
+          const { data: { data } } = await this.$http.post('/authorizations', this.LoginForm)
+          local.setUser(data)
+          this.$router.push('/')
+        } catch (e) { this.$message.error('手机号或者验证码不正确') }
       })
     }
   }

@@ -48,15 +48,16 @@
       <el-header>
         <span class="el-icon-s-fold" @click="toggleMenu"></span>
         <span class="text">江苏传智播客额吉教育股份有限公司</span>
-        <el-dropdown>
+        <el-dropdown @command="handleClick">
           <span class="el-dropdown-link">
-            <img src="../../assets/avatar.jpg" alt class="headerIcon" />
-            <span class="userName">用户名</span>
+            <img :src="photo" alt class="headerIcon" />
+            <span class="userName">{{name}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-lock">退出登录</el-dropdown-item>
+          <!-- 下拉按钮,用户信息 -->
+          <el-dropdown-menu slot="dropdown" >
+            <el-dropdown-item icon="el-icon-setting" command="setting">个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-lock" command="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -69,16 +70,38 @@
 </template>
 
 <script>
+import local from '@/utils/local'
 export default {
   data () {
+    // 申明数据
     return {
-      isopen: true
+      // 是不是展开的
+      isopen: true,
+      // 头像
+      photo: '',
+      // 名字
+      name: ''
     }
+  },
+  created () {
+    const user = local.getUser() || {}
+    this.name = user.name
+    this.photo = user.photo
   },
   methods: {
     toggleMenu () {
       // 切换侧边栏展开收齐
       this.isopen = !this.isopen
+    },
+    setting () {
+      this.$router.push('setting')
+    },
+    logout () {
+      local.delUser()
+      this.$router.push('/login')
+    },
+    handleClick (command) {
+      this[command]()
     }
   }
 }

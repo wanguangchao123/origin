@@ -10,8 +10,9 @@ const local = {
     const jsonStr = window.sessionStorage.getItem(KEY)
     return JSON.parse(jsonStr)
   },
-  delUser () {
+  delUser (KEY) {
     window.sessionStorage.removeItem(KEY)
   }
 }
+
 export default local
