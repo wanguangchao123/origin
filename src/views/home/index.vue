@@ -5,7 +5,7 @@
       <div class="logo" :class="{smallLogo:!isopen}"></div>
       <!-- 导航菜单 -->
       <el-menu
-        default-active="/"
+        :default-active="$route.path"
         background-color="#002033"
         text-color="#fff"
         active-text-color="#ffd04b"
@@ -55,7 +55,7 @@
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <!-- 下拉按钮,用户信息 -->
-          <el-dropdown-menu slot="dropdown" >
+          <el-dropdown-menu slot="dropdown">
             <el-dropdown-item icon="el-icon-setting" command="setting">个人设置</el-dropdown-item>
             <el-dropdown-item icon="el-icon-lock" command="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>

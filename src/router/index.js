@@ -5,6 +5,7 @@ import Login from '@/views/login'
 import Home from '@/views/home'
 import Welcome from '@/views/welcome'
 import NotFind from '@/views/404'
+import Article from '@/views/article'
 Vue.use(VueRouter)
 const router = new VueRouter({
   // 路由配置对象
@@ -24,6 +25,10 @@ const router = new VueRouter({
         {
           path: '/',
           component: Welcome
+        },
+        {
+          path: '/article',
+          component: Article
         }
       ]
     },
