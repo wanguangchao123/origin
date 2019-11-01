@@ -2,9 +2,17 @@
 import axios from 'axios'
 import local from '@/utils/local'
 import router from '@/router'
+import JSONBIG from 'json-bigint'
 // dui axios 配置
 // baseURL基准地
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
+axios.defaults.transformResponse = [(data) => {
+  try {
+    return JSONBIG.parse(data)
+  } catch (e) {
+    return data
+  }
+}]
 // 其它配置...请求头
 // 如果local.getuser存在值才会拿,
 // if (local.getUser()) {
